@@ -13,32 +13,37 @@ Below is the explanation of the command:
 """
 from fastapi import FastAPI, Query, HTTPException
 from pydantic import BaseModel
-from model import predict, convert
+from model import train,predict, report_result
+from typing import List, Optional
+from pathlib import Path
 
 app = FastAPI()
 
 # pydantic models
-class StockIn(BaseModel):
-    ticker: str
-    days: int
+class AudioIn(BaseModel):
+    keyword: Optional[str] = None
+    keyword_dir: Optional[str] = None
 
-class StockOut(StockIn):
-    forecast: dict
+class AudioOut(AudioIn):
+    FRR_and_FAR: List[float]
 
-@app.post("/predict", response_model=StockOut, status_code=200)
-def get_prediction(payload: StockIn):
-    ticker = payload.ticker
-    days = payload.days
 
-    prediction_list = predict(ticker, days)
+@app.post("/predict", response_model=AudioOut, status_code=200)
+def get_prediction(payload: AudioIn):
+    keyword = payload.keyword
+    keyword_dir = payload.keyword_dir
+    
+    keyword, test_samples= train(keyword, keyword_dir)
+    target_pred, nontarget_pred = predict(keyword, test_samples)
+    frr_val,far_val = report_result (target_pred, nontarget_pred)
+    
 
-    if not prediction_list:
+    if (not frr_val) or (not far_val):
         raise HTTPException(status_code=400, detail="Model not found.")
 
     response_object = {
-        "ticker": ticker, 
-        "days": days,
-        "forecast": convert(prediction_list)}
+        "keyword": keyword, 
+        "FRR_and_FAR": [frr_val,far_val]}
     return response_object
 
 """@app.get("/ping")
