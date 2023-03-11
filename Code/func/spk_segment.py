@@ -1,3 +1,6 @@
+# Nasim Alamdari
+# last Update March 2023
+
 """
 # for speechbrain
 !pip install -qq torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 torchtext==0.12.0
