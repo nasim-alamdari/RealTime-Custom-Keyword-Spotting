@@ -31,7 +31,7 @@ def segment (
     fs, wav = wavfile.read(wav_path)
     
     pipeline = Pipeline.from_pretrained('pyannote/speaker-segmentation',
-                        use_auth_token='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')
+                        use_auth_token='type_hugging_face_auth_token_here')
     output = pipeline(wav_path)
     
     def _plot_out(wav, output):
