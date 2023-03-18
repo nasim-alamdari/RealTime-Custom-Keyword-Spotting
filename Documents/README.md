@@ -1,4 +1,4 @@
-![Solution Architecture](MLE11 KWS Solution Architecture.jpg)
+![Solution Architecture](MLE11_KWS_Solution_Architecture.jpg)
 
 # Performance, interpretation, and learnings
 
