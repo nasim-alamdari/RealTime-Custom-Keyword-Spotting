@@ -5,4 +5,4 @@
 
 
 Report and Observation:
-the accuracy of a few-shot model can be quite sensitive to the particular samples chosen. A different set of five training samples will likely vary by a few percentage points from this model. The subset of unknown words and background noise also impact accuracy. Furthermore, some of the extracted test samples may be truncated (due to incorrect word boundary estimates) or occasionally anomalous due to issues with the originating crowdsourced data so a more accurate estimate of the test performance can only be made after manually listening to all test samples and discarding any malformed samples.
+the performance of a custom few-shot keyword spotting model can be sensitive to the particular samples chosen for fine-tuning the model. A different set of k=five training samples will likely vary by a few percentage points. Another performance factor is subset of unknown words and background noise we use for training and fine-tuning. Furthermore, some of the extracted test samples may be truncated (due to imperfect speaker segmentation).
