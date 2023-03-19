@@ -2,9 +2,9 @@ import pyaudio
 import numpy as np
 import struct
 import time
+from func import input_data
 
-
-def stream_proc_audio (duration: int, model):
+def stream_proc_audio (duration: int, KEYWORD:str, model, ths: list):
     p = pyaudio.PyAudio()
 
     def _find_input_device():
@@ -57,8 +57,9 @@ def stream_proc_audio (duration: int, model):
 
     print("Start Streaming...")
     frames = np.array([])
+    result = []
     for i in range(int(duration*RATE/CHUNK)): #go for a LEN seconds
-        block = np.fromstring(stream.read(CHUNK),dtype=np.float32)
+        block = np.fromstring(stream.read(CHUNK, exception_on_overflow = False),dtype=np.float32)
         frames = np.append(frames, block)
         
         
@@ -68,16 +69,19 @@ def stream_proc_audio (duration: int, model):
             pred, categorical_pred = _eval_stream (KEYWORD, model,frames)
             
             if categorical_pred == 1:
-                if pred[0][categorical_pred] >= 0.8:
-                    print( "Other words")
+                if pred[0][categorical_pred] >= ths[0]:
+                    result.append("Other Words")
+                    print( "Other Words")
             elif categorical_pred == 2:
-                if pred[0][categorical_pred] >= 0.8:
+                if pred[0][categorical_pred] >= ths[1]:
+                    result.append("KEYWORD")
                     print( "KEYWORD")
             elif categorical_pred == 0:
-                if pred[0][categorical_pred] >= 0.55:
+                if pred[0][categorical_pred] >= ths[2]:
+                    result.append("Background Noise/Silence")
                     print("Background Noise/Silence")
             frames = []
-            print("processing time for a chunk:", time.time() - t)
+            #print("processing time for a chunk:", time.time() - t)
 
 
 
@@ -86,7 +90,7 @@ def stream_proc_audio (duration: int, model):
     p.terminate()
     #write(os.path.join(record_save_path,record_name),  sample_rate, wav)
     print("Sreaming Completed")
-    return False
+    return result
 
 
 

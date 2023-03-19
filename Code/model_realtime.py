@@ -74,16 +74,18 @@ def report_result (target_pred, nontarget_pred):
     return frr_val,far_val
 
 
-def inference(keyword ,duration):
+def infer(keyword ,duration):
     
     model_file = Path(BASE_DIR).joinpath(f"{keyword}.joblib")
     # load model
+    print("Loading the fine-tuned model...")
     model = joblib.load(model_file)
     
     # define threshold for detection of keyword, other words, and background noise
-    ths = [0.8,0.8, 0.55]
+    ths = [0.9,0.9, 0.55]
     
     # processing time for 1-sec audio is on average 60 ms
+    print("Inference will start shortly...")
     result = inference.stream_proc_audio(duration,keyword, model, ths)
     return result
 
@@ -92,17 +94,21 @@ def inference(keyword ,duration):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Predict')
     parser.add_argument('--keyword', type=str, default='amelia', help='Keyword Name')
-    #parser.add_argument('--keyword_dir', type=str, default='./content/target_kw/amelia/', help='Keyword File Path')
-    #parser.add_argument('--days', type=int, default=7, help='Number of days to predict')
+    parser.add_argument('--train_flag', type=int, default=1, help='Flag for record and train or just load pre-trained model for the keyword')
+
     args = parser.parse_args()
+    print("Custom Keyword is: ", args.keyword)
+    print("Train flag is set to: ", args.train_flag)
     
-    keyword_dir = record(args.keyword)
-    spk_segments_path = preproc(args.keyword,keyword_dir)
-    test_samples= train(args.keyword, spk_segments_path)
-    target_pred, nontarget_pred = predict(args.keyword, test_samples)
-    frr_val,far_val = report_result (target_pred, nontarget_pred)
-    output = [frr_val,far_val]
-    result = inference(args.keyword,duration=30)
     
-    print("Training FRR and FAR result:", output)
-    print("inference result:",result)
+    if args.train_flag == 1:
+        keyword_dir = record(args.keyword)
+        spk_segments_path = preproc(args.keyword,keyword_dir)
+        test_samples= train(args.keyword, spk_segments_path)
+        target_pred, nontarget_pred = predict(args.keyword, test_samples)
+        frr_val,far_val = report_result (target_pred, nontarget_pred)
+        output = [frr_val,far_val]
+        print("Training FRR and FAR result:", output)
+    else:
+        result = infer(args.keyword,duration=30)
+        print("inference result:",result)
