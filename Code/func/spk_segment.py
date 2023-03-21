@@ -78,13 +78,13 @@ def segment (
         if (time_ms_en - time_ms_st +1) < fs:
             append_len_ms = fs - (time_ms_en - time_ms_st +1)
             append_len_s =  append_len_ms/fs # convert to sec
-        print(turn.start, turn.end, append_len_s)
+        #print(turn.start, turn.end, append_len_s)
 
         transformer = sox.Transformer()
         transformer.convert(samplerate=16000)  
         transformer.trim(turn.start, turn.end + append_len_s)
         transformer.build(wav_path, dest_wav)
-    print("Speaker Segmentation Completed.")
+    #print("Speaker Segmentation Completed.")
     return extractions
 
 
