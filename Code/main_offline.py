@@ -15,7 +15,7 @@ Below is the explanation of the command:
 """
 from fastapi import FastAPI, Query, HTTPException
 from pydantic import BaseModel
-from model import train,predict, report_result
+from model_offline import train,predict, report_result
 from typing import List, Optional
 from pathlib import Path
 

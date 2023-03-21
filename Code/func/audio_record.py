@@ -1,5 +1,4 @@
-# Nasim Alamdari
-# last Update March 2023
+
 """
 installation on Mac M1:
 1. brew install portaudio
@@ -10,7 +9,7 @@ import os
 import pyaudio
 #import torchaudio
 import numpy as np
-from scipy.io.wavfile import write
+from scipy.io.wavfile import write, read
 import struct
 import IPython
     
@@ -101,6 +100,9 @@ def record (
     p.terminate()
     write(os.path.join(record_save_path,record_name),  sample_rate, wav)
     print("Recording Completed")
+    fs, wav = read(os.path.join(record_save_path,record_name))
+    print("fs and wav len:", fs, len(wav))
+    return fs, os.path.join(record_save_path)
 
 
 #if __name__ == "__main__":
