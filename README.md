@@ -4,11 +4,11 @@ a low-latency few-shot keyword spotting (FS-KWS) for personalization of key word
 Contributors: **Nasim Alamdari and Christos Magganas**
 
 Solution Architecture
-![alt text](https://drive.google.com/file/d/1-LrUfbBSF1NQKUMHUYhqmB4JvlnXeO8D/view?usp=sharing)
+![Solution Architecture](Documents/MLE11_KWS_Solution_Architecture2.jpg)
 
 
-Training and Inference Steps:
-![alt text](https://drive.google.com/file/d/1DrQ5khw5q7iIX9OeNztKqrgv9yT8Uzl8/view?usp=sharing)
+**Deployment via Streamlit:**
+![streamlit App](Images/streamlit_screenshot.png)
 
 
 **Deployment is done with FastAPI and AWS EC2:**

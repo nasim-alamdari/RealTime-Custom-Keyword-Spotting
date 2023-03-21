@@ -128,9 +128,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# dataset
+# dataset, unzipped file only
 Code/content/
+!Code/content/*.zip
 
 # secrets
-.pem
-.env
+*.pem
+*.env
