@@ -10,5 +10,8 @@ python-dotenv==1.0.0
 scikit_learn==1.2.2
 scipy==1.10.0
 seaborn==0.12.2
+streamlit==1.20.0
 sox==1.4.1
 tqdm==4.65.0
+watchdog==3.0.0
+websockets==10.4
