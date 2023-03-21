@@ -22,6 +22,9 @@ import sox
 import os
 from pathlib import Path
 import subprocess
+from dotenv import load_dotenv
+load_dotenv()
+HF_TOKEN = os.getenv('HF_TOKEN')
 
 def segment (
     keyword: str,
@@ -34,7 +37,7 @@ def segment (
     fs, wav = wavfile.read(wav_path)
     
     pipeline = Pipeline.from_pretrained('pyannote/speaker-segmentation',
-                        use_auth_token='type_hugging_face_auth_token_here')
+                        use_auth_token=HF_TOKEN)
     output = pipeline(wav_path)
     
     def _plot_out(wav, output):
