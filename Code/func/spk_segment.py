@@ -29,17 +29,27 @@ HF_TOKEN = os.getenv('HF_TOKEN')
 def segment (
     keyword: str,
     recording_path: os.PathLike,
+<<<<<<< HEAD
     fs: int):
+=======
+    fs:int):
+>>>>>>> LocalDev
     
     #keyword = "heynasim"
     #recording_path = './content/target_kw/recording/heynasim/'
 
     wav_path = os.path.join(recording_path, keyword+'.wav')
+<<<<<<< HEAD
     #print(wav_path)
     #fs, wav = wavfile.read(wav_path)
     
     pipeline = Pipeline.from_pretrained('pyannote/speaker-segmentation',
                         use_auth_token='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')
+=======
+    #fs, wav = wavfile.read(wav_path)
+    
+    pipeline = Pipeline.from_pretrained('pyannote/speaker-segmentation', use_auth_token='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')
+>>>>>>> LocalDev
     output = pipeline(wav_path)
     
     def _plot_out(wav, output):
@@ -92,11 +102,16 @@ def segment (
 
     
 
+<<<<<<< HEAD
 if __name__ == "__main__":
     keyword = "heynasim"
     recording_path = './content/target_kw/recording/heynasim/'
     fs = 16000
     extractions = segment (keyword,recording_path,fs)
+=======
+#if __name__ == "__main__":
+#    extractions = segment (keyword, recording_path, fs)
+>>>>>>> LocalDev
 
 
 

@@ -7,6 +7,10 @@ Solution Architecture
 ![Solution Architecture](Documents/MLE11_KWS_Solution_Architecture2.jpg)
 
 
+**Deployment via Streamlit:**
+![streamlit App](Images/streamlit_screenshot.png)
+
+
 **Deployment is done with FastAPI and AWS EC2:**
 curl -X 'POST' \
   'http://54.213.116.214:8000/predict' \

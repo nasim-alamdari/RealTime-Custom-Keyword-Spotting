@@ -133,5 +133,5 @@ Code/content/
 !Code/content/*.zip
 
 # secrets
-.pem
-.env
+*.pem
+*.env
