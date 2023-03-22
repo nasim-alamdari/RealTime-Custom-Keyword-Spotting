@@ -11,16 +11,6 @@ Solution Architecture
 ![streamlit App](Images/streamlit_screenshot.png)
 
 
-**Deployment is done with FastAPI and AWS EC2:**
-curl -X 'POST' \
-  'http://54.213.116.214:8000/predict' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "keyword": "amelia",
-  "keyword_dir": "./content/target_kw/amelia/"
-}'
-
 
 
 
