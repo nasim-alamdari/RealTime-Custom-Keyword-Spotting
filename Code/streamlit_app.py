@@ -42,22 +42,14 @@ def start_training(spk_segments_path):
     test_samples= train(KEYWORD, spk_segments_path)
     target_pred, nontarget_pred = predict(KEYWORD, test_samples)
     frr_val,far_val = report_result (target_pred, nontarget_pred)
-<<<<<<< HEAD
     st.markdown('###### :green[Training completed! 🏁]')
-=======
-    st.markdown('###### :green[Training completed 🏁]')
->>>>>>> LocalDev
     st.write("FRR and FAA are:", frr_val, far_val)
     train_done = True
     return train_done
 
 def start_inference():
-<<<<<<< HEAD
-    st.write('Loading the fine-tuned model...')
-=======
     st.write('Loading the fine-tuned model may take a minute...⌛')
     st.write('Please start speaking, result will be shown at the end...')
->>>>>>> LocalDev
     result = infer(KEYWORD,duration=30)
     st.write("Inference Ended")
     return result
