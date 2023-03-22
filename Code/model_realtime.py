@@ -4,7 +4,6 @@ import os
 import joblib
 import pandas as pd
 from func import audio_record, kws_train, input_data, spk_segment, inference
-
 import argparse
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent
@@ -17,12 +16,12 @@ def record(KEYWORD:str):
     record_name = KEYWORD+'.wav'
     
     duration = 30 # 20 sec
-    audio_record.record (duration, record_name, keyword_dir )
-    return keyword_dir
+    fs, keyword_dir= audio_record.record (duration, record_name, keyword_dir )
+    return fs, keyword_dir
 
 
-def preproc(KEYWORD,keyword_dir):
-    spk_segments_path = spk_segment.segment (KEYWORD,keyword_dir)
+def preproc(KEYWORD,keyword_dir,fs):
+    spk_segments_path = spk_segment.segment (KEYWORD,keyword_dir,fs)
     return spk_segments_path
 
 def train(keyword="amelia", keyword_dir = './content/target_kw/amelia/'):
@@ -102,13 +101,14 @@ if __name__ == "__main__":
     
     
     if args.train_flag == 1:
-        keyword_dir = record(args.keyword)
-        spk_segments_path = preproc(args.keyword,keyword_dir)
+        fs, keyword_dir = record(args.keyword)
+        spk_segments_path = preproc(args.keyword,keyword_dir, fs)
         test_samples= train(args.keyword, spk_segments_path)
         target_pred, nontarget_pred = predict(args.keyword, test_samples)
         frr_val,far_val = report_result (target_pred, nontarget_pred)
         output = [frr_val,far_val]
         print("Training FRR and FAR result:", output)
+        result = infer(args.keyword,duration=30)
     else:
         result = infer(args.keyword,duration=30)
         print("inference result:",result)
