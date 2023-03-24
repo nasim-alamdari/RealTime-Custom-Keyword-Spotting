@@ -16,7 +16,7 @@ def record(KEYWORD:str):
         os.mkdir(keyword_dir)
     record_name = KEYWORD+'.wav'
     
-    duration = 30 # 20 sec
+    duration = 10 # 20 sec
     audio_record.record (duration, record_name, keyword_dir )
     return keyword_dir
 
