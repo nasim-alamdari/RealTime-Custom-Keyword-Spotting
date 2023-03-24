@@ -1,0 +1,86 @@
+# # Base image from ubuntu LTS 22.04
+# FROM ubuntu:22.04
+
+# # Set the working directory to /app
+# WORKDIR /app
+
+# # Copy the current directory contents into the container at /app
+# ADD src/* /app/
+
+# #install conda
+# RUN apt-get update && apt-get install -y wget bzip2 ca-certificates curl git
+# RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+#     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+#     rm ~/miniconda.sh
+# ENV PATH /opt/conda/bin:$PATH
+
+# # Create conda environment 
+# RUN conda create -n kws-env python=3.8
+
+# RUN . /opt/conda/etc/profile.d/conda.sh && \
+#     conda activate kws-env && \
+#     python -m pip install -U -q fastapi uvicorn && \
+#     pip install --trusted-host pypi.python.org -r requirements.txt
+
+# ADD entrypoint.sh /app/
+# # Make port 8000 available to the world outside this container
+# EXPOSE 8000
+
+# # Run app.py when the container launches
+# ENTRYPOINT ["/app/entrypoint.sh"]
+
+FROM continuumio/miniconda3:latest
+
+# Update conda and install required packages
+RUN conda update -n base -c defaults conda && \
+    # conda install -c apple tensorflow-deps && \
+    # conda install -c conda-forge tensorflow-deps && \
+    conda install -c conda-forge libsndfile && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python packages with pip
+COPY requirements.txt /tmp/
+RUN pip install -r /tmp/requirements.txt && \
+    pip install pyannote.audio && \
+    pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 && \
+    rm /tmp/requirements.txt
+
+# Install PyAudio
+RUN apt-get update && \
+    apt-get install -y gcc && \
+    apt-get install -y portaudio19-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    python -m pip install --global-option='build_ext' --global-option='-I/usr/include/portaudio' --global-option='-L/usr/lib/x86_64-linux-gnu/' pyaudio
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+ADD Code/* /app/
+
+# #install conda
+# FROM base AS conda
+# RUN apt-get update && apt-get install -y wget bzip2 ca-certificates curl git
+# RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh -O ~/miniconda.sh && \
+#     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+#     rm ~/miniconda.sh
+ENV PATH /opt/conda/bin:$PATH
+
+# # Create conda environment 
+# RUN conda create -n kws-env python=3.8
+
+# RUN \
+#     # . /opt/conda/etc/profile.d/conda.sh && \
+#     conda activate kws-env && \
+#     python -m pip install -U -q fastapi uvicorn && \
+#     pip install --trusted-host pypi.python.org -r requirements.txt
+
+# ADD entrypoint.sh /app/
+# # Make port 8000 available to the world outside this container
+# EXPOSE 8000
+
+# # Run app.py when the container launches
+# ENTRYPOINT ["/app/entrypoint.sh"]
+
+# Set the command to run the uvicorn server.
+CMD ["uvicorn", "main:app", "--workers", "1", "--host", "0.0.0.0", "--port", "8000"]
