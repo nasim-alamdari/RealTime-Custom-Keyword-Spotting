@@ -9,13 +9,13 @@ import argparse
 BASE_DIR = Path(__file__).resolve(strict=True).parent
 TODAY = datetime.date.today()
 
-def record(KEYWORD:str):
+def record(KEYWORD:str, duration:int):
     keyword_dir = os.path.join(BASE_DIR , './content/target_kw/recording/',KEYWORD )
     if not os.path.exists(keyword_dir):
         os.mkdir(keyword_dir)
     record_name = KEYWORD+'.wav'
     
-    duration = 30 # 20 sec
+    #duration = 30 # 20 sec
     fs, keyword_dir= audio_record.record (duration, record_name, keyword_dir )
     return fs, keyword_dir
 
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     
     
     if args.train_flag == 1:
-        fs, keyword_dir = record(args.keyword)
+        fs, keyword_dir = record(args.keyword, 20)
         spk_segments_path = preproc(args.keyword,keyword_dir, fs)
         test_samples= train(args.keyword, spk_segments_path)
         target_pred, nontarget_pred = predict(args.keyword, test_samples)
