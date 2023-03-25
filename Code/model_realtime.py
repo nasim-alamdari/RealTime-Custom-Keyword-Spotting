@@ -89,6 +89,22 @@ def infer(keyword ,duration):
     return result
 
 
+def infer_rltime(keyword):
+    
+    model_file = Path(BASE_DIR).joinpath(f"{keyword}.joblib")
+    # load model
+    print("Loading the fine-tuned model...")
+    model = joblib.load(model_file)
+    
+    # define threshold for detection of keyword, other words, and background noise
+    ths = [0.9,0.9, 0.55]
+    
+    # processing time for 1-sec audio is on average 60 ms
+    print("Inference will start shortly...")
+    #result = inference.stream_proc_audio(duration,keyword, model, ths)
+    return model, ths
+
+
 # comment out for FastAPI app
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Predict')
