@@ -28,9 +28,9 @@ p = pyaudio.PyAudio()
     
 BASE_DIR = Path(__file__).resolve(strict=True).parent
 
-def start_recording(KEYWORD):
+def start_recording(KEYWORD, duration):
     st.write("Please Repeat Your Custom Keyword ...")
-    fs, keyword_dir = record(KEYWORD)
+    fs, keyword_dir = record(KEYWORD,duration)
 
     # segment the recorded audio
     spk_segments_path = preproc (KEYWORD,keyword_dir,fs)
@@ -88,12 +88,15 @@ info_dict["keyword"] = KEYWORD
 #col3.button('Start Inference')
 #col4.button('Stop Inference', on_click=stop_listening)
 
-st.markdown('###### :violet[Step 2: Press "*Record*" and Repeat Your Custom Keyword for 30 Seconds.]')
+st.markdown('### :white[Record Audio]')
+duration = st.slider("Select recording duration (in seconds)", 15, 60, 20) # minimum of 20 second recording
+st.markdown(':violet[Press "*Record*" and Repeat Your Custom Keyword.]')
 if st.button('Record 🎙️'):
-    spk_segments_path = start_recording(info_dict["keyword"])
+    spk_segments_path = start_recording(KEYWORD, duration)
     info_dict["spk_segments_path"] = spk_segments_path
     
-st.markdown('###### :violet[Step 3: Press "*Train*" to Fine-Tune the Model]')
+st.markdown('### :white[Train]')
+st.markdown('violet[Press "*Train*" to Fine-Tune the Model]')
 st.write('Training may take few minutes...⌛')
 if st.button('Train 🛠️'):
     spk_segments_path = os.path.join(BASE_DIR , './content/target_kw/recording/',KEYWORD)
@@ -101,7 +104,9 @@ if st.button('Train 🛠️'):
     train_done = start_training(spk_segments_path)
     info_dict["train_done"] = train_done
     
-st.markdown('###### :violet[Step 4: Press "*Start Inference*" to Test the Fine-Tuned Custom Keyword Spotting Model in Real-Time]')
+st.markdown('### :white[Real-Time Evaluation]')
+st.markdown(':violet[Press "*Start Inference*" to Test the Fine-Tuned Custom Keyword Spotting Model in Real-Time]')
+st.write('Result will be shown after 30 seconds...⌛')
 if st.button('Start Inference ▶️'):
     #if info_dict["train_done"]:
     result = start_inference()
