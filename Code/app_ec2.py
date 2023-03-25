@@ -68,8 +68,6 @@ async def websocket_endpoint(websocket: WebSocket):
         audio_data = await websocket.receive_bytes()
         await sgment_train(audio_data)
         await websocket.send_text("Training completed...")
-    except:
-        break
         
         
 # Define inference function
