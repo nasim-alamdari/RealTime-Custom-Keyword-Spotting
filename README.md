@@ -20,8 +20,17 @@ conda create --name kws
 conda activate kws
 pip install -r requirement.txt
 ```
+**3.** Regarding installing Pyaudio on M1 Mac or EC2 :
+```
+# for M1 Mac:
+brew install portaudio
+pip install PyAudio
 
-**3. Enjoy real-time custom keyword spotting inside your streamlit app! 🎈**
+# for EC2 Ubuntu:
+sudo apt install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0 ffmpeg libav-tools
+pip install PyAudio
+```
+**4. Enjoy real-time custom keyword spotting inside your streamlit app! 🎈**
 ```
 cd Code
 streamlit run streamlit_rltime_app.py
