@@ -55,10 +55,6 @@ def start_inference():
     return result
 
 
-
-
-
-
 # Web user interface
 st.title('🎙️ Real-Time Multilingual Custom Few-Shot Keyword Spotting App')
 
@@ -80,18 +76,6 @@ st.markdown('###### :violet[Step 1: Enter Your Custom Keyword]')
 KEYWORD = st.text_input('e.g. heyGPT')
 st.write('The current Custom Keyword is: ', KEYWORD)
 info_dict["keyword"] = KEYWORD
-
-
-#col1,col2,col3 = st.columns(3)
-#col1.button('Record 🎙️')
-
-
-#col2.button('Train')
-
-
-
-#col3.button('Start Inference')
-#col4.button('Stop Inference', on_click=stop_listening)
 
 st.markdown('###### :violet[Step 2: Press "*Record*" and Repeat Your Custom Keyword for 30 Seconds.]')
 if st.button('Record 🎙️'):
