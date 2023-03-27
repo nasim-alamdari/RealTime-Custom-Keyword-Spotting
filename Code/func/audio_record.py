@@ -22,7 +22,7 @@ def record (
     #=====================================
     # Open an audio stream from the microphone with PyAudio
 
-    INPUT_BLOCK_TIME = 0.0125
+    INPUT_BLOCK_TIME = 0.025
     sample_rate = 16000
     CHUNK = int(sample_rate*INPUT_BLOCK_TIME) # FRAMES_PER_BUFFER
     FORMAT = pyaudio.paInt16

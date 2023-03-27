@@ -27,7 +27,7 @@ if 'text' not in st.session_state:
 
 # Audio parameters 
 st.sidebar.header('Audio Parameters')
-FRAMES_PER_BUFFER = int(st.sidebar.text_input('Frames per buffer', 200))
+FRAMES_PER_BUFFER = int(st.sidebar.text_input('Frames per buffer', 400))
 RATE = int(st.sidebar.text_input('Rate', 16000))
 TH = int(st.sidebar.text_input('Detection Confidence (%)', 90))
 SESS = False

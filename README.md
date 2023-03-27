@@ -1,7 +1,8 @@
 # Real-time Multilingual Custom Keyword Spotting via Few Shot Learning
 - Proposing a lightweight few-shot keyword spotting (FS-KWS) for personalization of keyword spotting or wake-word detection running in real-time on an edge device.
-- The customization is achieved by recording audio from the user for less than 30 seconds, then segmenting the speaker's audio to 1-second speech audio files via a deep learning model. Segmented audio files were then used to fine-tune and customize an efficientnet-B0-based multilingual keyword spotting model through few-shot learning. The baseline model that we used in this study is based on [Harvard-edge](https://github.com/harvard-edge/multilingual_kws) work.
-- Observed processing time for each 1-second audio chunk observed was 60 ms.
+- The customization is achieved by recording audio from the user for less than 30 seconds, then segmenting the speaker's audio to 1-second speech audio files via a deep learning model [2]. Segmented audio files were then used to fine-tune and customize an efficientnet-B0-based multilingual keyword spotting model through few-shot learning. The baseline model that we used in this study is based on [Harvard-edge](https://github.com/harvard-edge/multilingual_kws)[2] work.
+- Our model operates on short audio chunks (1 seconds) but at a much higher tempo- ral resolution (every 25 ms).
+- Average processing time for each 1-second audio chunk observed to be 60 ms.
 
 
 ## Solution Architecture
@@ -41,11 +42,22 @@ streamlit run streamlit_rltime_app.py
 
 ![streamlit App](Images/streamlit_scrnshot.png)
 
+
+
+
+#### References
+[1] [End-to-end speaker segmentation for overlap-aware resegmentation, Proc. Interspeech 2021] (https://arxiv.org/pdf/2104.04045.pdf)
+[2] [Few-Shot Keyword Spotting in Any Language, Proc. Interspeech 2021] (https://www.isca-speech.org/archive/pdfs/interspeech_2021/mazumder21_interspeech.pdf)
+
+
 Feel free to reach out to me in case you have any questions! <br>
 Pls consider leaving a `star` ☆ with this repository to show your support.
 
 #### Contributors: 
 [Nasim Alamdari](https://www.linkedin.com/in/nasim-alamdari/) and [Christos Magganas](https://www.linkedin.com/in/christos-magganas/)
+
+
+
 
 
 
