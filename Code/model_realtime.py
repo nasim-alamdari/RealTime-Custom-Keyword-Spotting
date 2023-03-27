@@ -4,25 +4,24 @@ import os
 import joblib
 import pandas as pd
 from func import audio_record, kws_train, input_data, spk_segment, inference
-
 import argparse
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent
 TODAY = datetime.date.today()
 
-def record(KEYWORD:str):
+def record(KEYWORD:str, duration:int):
     keyword_dir = os.path.join(BASE_DIR , './content/target_kw/recording/',KEYWORD )
     if not os.path.exists(keyword_dir):
         os.mkdir(keyword_dir)
     record_name = KEYWORD+'.wav'
     
-    duration = 10 # 20 sec
-    audio_record.record (duration, record_name, keyword_dir )
-    return keyword_dir
+    #duration = 30 # 20 sec
+    fs, keyword_dir= audio_record.record (duration, record_name, keyword_dir )
+    return fs, keyword_dir
 
 
-def preproc(KEYWORD,keyword_dir):
-    spk_segments_path = spk_segment.segment (KEYWORD,keyword_dir)
+def preproc(KEYWORD,keyword_dir,fs):
+    spk_segments_path = spk_segment.segment (KEYWORD,keyword_dir,fs)
     return spk_segments_path
 
 def train(keyword="amelia", keyword_dir = './content/target_kw/amelia/'):
@@ -90,6 +89,22 @@ def infer(keyword ,duration):
     return result
 
 
+def infer_rltime(keyword):
+    
+    model_file = Path(BASE_DIR).joinpath(f"{keyword}.joblib")
+    # load model
+    print("Loading the fine-tuned model...")
+    model = joblib.load(model_file)
+    
+    # define threshold for detection of keyword, other words, and background noise
+    ths = [0.9,0.9, 0.55]
+    
+    # processing time for 1-sec audio is on average 60 ms
+    print("Inference will start shortly...")
+    #result = inference.stream_proc_audio(duration,keyword, model, ths)
+    return model, ths
+
+
 # comment out for FastAPI app
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Predict')
@@ -102,13 +117,14 @@ if __name__ == "__main__":
     
     
     if args.train_flag == 1:
-        keyword_dir = record(args.keyword)
-        spk_segments_path = preproc(args.keyword,keyword_dir)
+        fs, keyword_dir = record(args.keyword, 20)
+        spk_segments_path = preproc(args.keyword,keyword_dir, fs)
         test_samples= train(args.keyword, spk_segments_path)
         target_pred, nontarget_pred = predict(args.keyword, test_samples)
         frr_val,far_val = report_result (target_pred, nontarget_pred)
         output = [frr_val,far_val]
         print("Training FRR and FAR result:", output)
+        result = infer(args.keyword,duration=30)
     else:
         result = infer(args.keyword,duration=30)
         print("inference result:",result)

@@ -1,30 +1,17 @@
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
-# export PATH="/home/ubuntu/miniconda3/bin:$PATH"
+FROM python:3.8
 
-conda create -n kws python=3.8 -y
-conda activate kws
-git clone https://github.com/nasim-alamdari/RealTime-Custom-Keyword-Spotting.git
-cd RealTime-Custom-Keyword-Spotting
-sudo apt-get update # sudo apt-get update && sudo apt-get upgrade -y
-sudo apt install python3-pip -y
-pip install --upgrade pip
+# Set the working directory to the root of your project inside the container.
+WORKDIR .
 
-sudo apt-get install portaudio19-dev python3-pyaudio libcairo2-dev -y
-# sudo apt-get install tmux
-pip install PyAudio
-pip install pyannote.audio
-pip install torchvision==0.12.0
-pip install torchaudio==0.11.0
-sudo apt-get -y install sox
-# sudo apt install ffmpeg
-pip install streamlit uvicorn
-pip install websockets
-# pip install streamlit_webrtc
-pip install fastapi
 
-pip install -r requirements.txt
-# export PATH=$PATH:~/.local/bin
+#Copy the file with the requirements to the (current/root) directory.
+COPY requirements.txt .
 
-cd Code
-streamlit run streamlit_app.py
+# Install appropriate dependencies.
+RUN pip install --no-cache-dir -U -r  requirements.txt
+
+COPY ./Code
+
+EXPOSE 8501
+CMD ["streamlit", "run", "streamlit_rltime_app.py"]
+

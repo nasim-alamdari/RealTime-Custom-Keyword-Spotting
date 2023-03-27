@@ -15,3 +15,11 @@ sox==1.4.1
 tqdm==4.65.0
 watchdog==3.0.0
 websockets==10.4
+tensorflow
+PyAudio
+pyannote.audio
+torchvision==0.12.0
+torchaudio==0.11.0
+streamlit
+uvicorn
+streamlit_webrtc
