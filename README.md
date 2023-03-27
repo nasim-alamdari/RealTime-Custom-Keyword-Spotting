@@ -46,11 +46,11 @@ streamlit run streamlit_rltime_app.py
 
 
 #### References
-1. [End-to-end speaker segmentation for overlap-aware resegmentation, Proc. Interspeech 2021] (https://arxiv.org/pdf/2104.04045.pdf)
-2. [Few-Shot Keyword Spotting in Any Language, Proc. Interspeech 2021] (https://www.isca-speech.org/archive/pdfs/interspeech_2021/mazumder21_interspeech.pdf)
+1. Paper: [End-to-end speaker segmentation for overlap-aware resegmentation, Proc. Interspeech 2021] (https://arxiv.org/pdf/2104.04045.pdf)
+2. Paper: [Few-Shot Keyword Spotting in Any Language, Proc. Interspeech 2021] (https://www.isca-speech.org/archive/pdfs/interspeech_2021/mazumder21_interspeech.pdf)
 
 
-Feel free to reach out to me in case you have any questions! <br>
+Feel free to reach out to us in case you have any questions! <br>
 Pls consider leaving a `star` ☆ with this repository to show your support.
 
 #### Contributors: 
