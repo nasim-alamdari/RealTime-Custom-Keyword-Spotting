@@ -39,7 +39,7 @@ def segment (
     #fs, wav = wavfile.read(wav_path)
     
     pipeline = Pipeline.from_pretrained('pyannote/speaker-segmentation',
-                        use_auth_token='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')
+                        use_auth_token=HF_TOKEN) # you can obtrain you HF_TOKEN from huggingface, security-tokens
     output = pipeline(wav_path)
     
     def _plot_out(wav, output):
