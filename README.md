@@ -1,7 +1,7 @@
 # Real-time Multilingual Custom Keyword Spotting via Few Shot Learning
-- a low-latency few-shot keyword spotting (FS-KWS) for personalization of keyword spotting  or wakeword detection running in real-time on an edge device.
-- customization achieved by recording audio from user for less than 30 seconds, then segmenting speaker's audio to 1-second speech audio files via a deep learning model. Segmented audio files then used to fine-tune and customize an efficinetnet-B0 based multilingual keyword spotting model through few-shot leanring. The baseline model that we used in this study is based on [harvard-edge](https://github.com/harvard-edge/multilingual_kws) work.
-- Processing time for each 1-second audio chunk is 60 ms.
+- Proposing a lightweight few-shot keyword spotting (FS-KWS) for personalization of keyword spotting or wake-word detection running in real-time on an edge device.
+- The customization is achieved by recording audio from the user for less than 30 seconds, then segmenting the speaker's audio to 1-second speech audio files via a deep learning model. Segmented audio files were then used to fine-tune and customize an efficientnet-B0-based multilingual keyword spotting model through few-shot learning. The baseline model that we used in this study is based on [Harvard-edge](https://github.com/harvard-edge/multilingual_kws) work.
+- Observed processing time for each 1-second audio chunk observed was 60 ms.
 
 
 ## Solution Architecture
