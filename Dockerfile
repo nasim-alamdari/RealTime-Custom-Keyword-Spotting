@@ -23,7 +23,7 @@ ENV PATH="/opt/conda/envs/kws/bin:$PATH"
 RUN git clone -b cool https://github.com/nasim-alamdari/RealTime-Custom-Keyword-Spotting.git && \
     cd RealTime-Custom-Keyword-Spotting && \
     pip install --upgrade pip && \
-    pip install -r requirements.txt && \
+    pip install -U -r requirements.txt && \
     pip install PyAudio torchvision==0.12.0 torchaudio==0.11.0 pyannote.audio streamlit uvicorn websockets fastapi && \
     # possible incompatible versions of llvmlite, numba, numpy
     # pip uninstall llvmlite numba numpy && \
