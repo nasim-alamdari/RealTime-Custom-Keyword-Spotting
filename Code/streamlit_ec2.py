@@ -1,7 +1,6 @@
 # run this command: streamlit run streamlit_ec2.py
 import streamlit as st
 import requests
-import pyaudio
 import os
 from pathlib import Path
 from model_realtime import record, preproc, train, predict, report_result, infer
@@ -10,6 +9,9 @@ from model_realtime import record, preproc, train, predict, report_result, infer
 #import base64
 #import json
 import librosa
+from scipy.io.wavfile import write, read
+import subprocess
+import shutil
 BASE_DIR = Path(__file__).resolve(strict=True).parent
 
 
@@ -33,12 +35,27 @@ st.markdown('##### :violet[Step 1: Enter Your Custom Keyword]')
 KEYWORD = st.text_input('e.g. heyGPT')
 st.write('The current Custom Keyword is: ', KEYWORD)
 
+
+def del_prevFiles (folder_path):
+    # get a list of all files in the folder
+    file_list = os.listdir(folder_path)
+
+    # loop through the files and delete them
+    for filename in file_list:
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+        except Exception as e:
+            print(e)
+
+
 def send_audio_file(file, flag):
     # Define FastAPI endpoint URL
     if flag == "train":
         api_url = "http://0.0.0.0:8000/train"
         files = {"file": (KEYWORD +"_audio_train.wav", file.read(), "audio/wav")}
-        st.write('Training may take few minutes...⌛')
+        st.write('Training may take 2-3 minutes...⌛')
     elif flag == "predict":
         api_url = "http://0.0.0.0:8000/predict"
         files = {"file": (KEYWORD +"_audio_predict.wav", file.read(), "audio/wav")}
@@ -58,13 +75,15 @@ def send_audio_file(file, flag):
         st.write("Error making result request")
         return None
 
-
-
+    
 def upload_train_file():
     keyword_dir = os.path.join(BASE_DIR , './content/target_kw/uploaded/')
     if not os.path.exists(keyword_dir):
         os.mkdir(keyword_dir)
         
+    # delete any existing audio files before oding any uploading
+    del_prevFiles (keyword_dir) 
+    
     uploaded_wav = st.file_uploader("Upload your (.wav) audio file", type=["wav"], key="audio_file1")
 
     if uploaded_wav is not None:
@@ -73,20 +92,26 @@ def upload_train_file():
         st.write(uploaded_wav)
         
         # Read WAV file and Display audio waveform
-        y, sr = librosa.load(uploaded_wav)
+        sr, y = read(uploaded_wav)
         st.audio(y, format='audio/wav', sample_rate=sr)
 
-        uploaded_wav.name = KEYWORD + "_train_audio.wav" # rename audio before sending              
+        uploaded_wav.name = KEYWORD +".wav" # rename audio before sending              
         file_path = os.path.join(keyword_dir, uploaded_wav.name)
         with open(file_path, "wb") as f: 
-            st.success("File saved successfully!")
+            write(file_path,  sr, y)
+            subprocess.run('ffmpeg -hide_banner -loglevel error -y -i file_path -acodec pcm_s16le -ac 1 -ar 16000 file_path', shell=True)
+            #st.success("File saved successfully!")
 
         # Create a button that the user must click after uploading the file
         st.markdown('##### :violet[Step 3: Fine-Tuning the KWS Model]')
         if st.button("Process Audio for Fine-Tuning"):
-            # Do something with the uploaded file
             result = send_audio_file(uploaded_wav, "train")
-            st.write("Train File processed!")
+            st.success('###### :green[Training completed! 🏁]')
+            st.write(result)
+            
+            # delete existing audio files after training
+            os.remove(file_path)
+            shutil.rmtree(os.path.join(keyword_dir, 'extractions'))
     else:
         st.write("file is not uploaded yet.")
         
@@ -104,20 +129,23 @@ def upload_predict_file():
         st.write(uploaded_wav)
         
         # Read WAV file and Display audio waveform
-        y, sr = librosa.load(uploaded_wav)
+        sr, y = read(uploaded_wav)
         st.audio(y, format='audio/wav', sample_rate=sr)
 
         uploaded_wav.name = KEYWORD + "_predict_audio.wav" # rename audio before sending           
         file_path = os.path.join(keyword_dir, uploaded_wav.name)
         with open(file_path, "wb") as f: 
-            st.success("File saved successfully!")
+            write(file_path,  sr, y)
+            subprocess.run('ffmpeg -hide_banner -loglevel error -y -i file_path -acodec pcm_s16le -ac 1 -ar 16000 file_path', shell=True)
+            #st.success("File saved successfully!")
 
         # Create a button that the user must click after uploading the file
         st.markdown('##### :violet[Step 5: Prediction]')
         if st.button("Process Audio for Prediction"):
-            # Do something with the uploaded file
             result = send_audio_file(uploaded_wav, "predict")
-            st.write("Predict File processed!")
+            st.success('###### :green[Prediction completed! 🏁]')
+            # delete existing audio files after prediction
+            os.remove(file_path)
     else:
         st.write("file is not uploaded yet.")
 
