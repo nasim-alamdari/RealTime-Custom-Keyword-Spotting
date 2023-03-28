@@ -7,14 +7,26 @@ from fastapi.responses import JSONResponse
 import os
 from pathlib import Path
 from model_realtime import preproc, train, predict, report_result, infer_rltime
+import re
 
+BASE_DIR = Path(__file__).resolve(strict=True).parent
 app = FastAPI()
 
 
 def proc_train(audio_data):
-    # Load audio data using librosa
-    audio, fs = librosa.load(io.BytesIO(audio_data), sr=None, mono=True)
     
+    keyword_dir = os.path.join(BASE_DIR , './content/target_kw/uploaded/')
+    for file in Path(keyword_dir).glob("**/*.wav"):
+        filename = os.path.splitext(file)[0]
+        if '_train_audio' in filename :
+            m = re.search('(.+?)_train_audio', filename)
+            KEYWORD = m.group(1)
+            print("keyword is:", KEYWORD)
+            
+            # Load audio data using librosa
+            #audio, fs = librosa.load(io.BytesIO(audio_data), sr=None, mono=True)
+            audio, fs = librosa.load(file, sr=None, mono=True)
+
     # segment the recorded audio
     spk_segments_path = preproc (KEYWORD,keyword_dir,fs)
     print('segmentation completed!')
@@ -42,8 +54,18 @@ def eval_stream (KEYWORD, model,frames):
 
 
 def predict_per_chunk(audio_data):
-    # Load audio data using librosa
-    audio, fs = librosa.load(io.BytesIO(audio_data), sr=None, mono=True)
+    
+    keyword_dir = os.path.join(BASE_DIR , './content/target_kw/uploaded/')
+    for file in Path(keyword_dir).glob("**/*.wav"):
+        filename = os.path.splitext(file)[0]
+        if '_predict_audio' in filename :
+            m = re.search('(.+?)_train_audio', filename)
+            KEYWORD = m.group(1)
+            print("keyword is:", KEYWORD)
+            
+            # Load audio data using librosa
+            #audio, fs = librosa.load(io.BytesIO(audio_data), sr=None, mono=True)
+            audio, fs = librosa.load(file, sr=None, mono=True)
 
     # Define frame size and overlap
     frame_size = fs # equivalend to 1-sec audio chunk
@@ -80,6 +102,7 @@ def predict_per_chunk(audio_data):
 @app.post("/train")
 async def make_prediction(file: bytes = File(...)):
     # Make prediction using audio file data
+    print("file:",file)
     result = proc_train(file)
     # Return prediction result as JSON
     return JSONResponse(content={"result": result})
@@ -88,6 +111,7 @@ async def make_prediction(file: bytes = File(...)):
 @app.post("/predict")
 async def make_prediction(file: bytes = File(...)):
     # Make prediction using audio file data
+    print("file:",file)
     predictions = predict_per_chunk(file)
     # Return prediction result as JSON
     return JSONResponse(content={"prediction": predictions})

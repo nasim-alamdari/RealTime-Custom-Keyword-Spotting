@@ -61,7 +61,7 @@ def send_audio_file(file, flag):
 
 
 def upload_train_file():
-    keyword_dir = os.path.join(BASE_DIR , './content/target_kw/uploaded/',KEYWORD )
+    keyword_dir = os.path.join(BASE_DIR , './content/target_kw/uploaded/')
     if not os.path.exists(keyword_dir):
         os.mkdir(keyword_dir)
         
@@ -78,7 +78,8 @@ def upload_train_file():
 
         uploaded_wav.name = KEYWORD + "_train_audio.wav" # rename audio before sending              
         file_path = os.path.join(keyword_dir, uploaded_wav.name)
-        st.success("File saved successfully!")
+        with open(file_path, "wb") as f: 
+            st.success("File saved successfully!")
 
         # Create a button that the user must click after uploading the file
         st.markdown('##### :violet[Step 3: Fine-Tuning the KWS Model]')
@@ -91,7 +92,7 @@ def upload_train_file():
         
 
 def upload_predict_file():
-    keyword_dir = os.path.join(BASE_DIR , './content/target_kw/uploaded/',KEYWORD )
+    keyword_dir = os.path.join(BASE_DIR , './content/target_kw/uploaded/')
     if not os.path.exists(keyword_dir):
         os.mkdir(keyword_dir)
         
@@ -108,7 +109,8 @@ def upload_predict_file():
 
         uploaded_wav.name = KEYWORD + "_predict_audio.wav" # rename audio before sending           
         file_path = os.path.join(keyword_dir, uploaded_wav.name)
-        st.success("File saved successfully!")
+        with open(file_path, "wb") as f: 
+            st.success("File saved successfully!")
 
         # Create a button that the user must click after uploading the file
         st.markdown('##### :violet[Step 5: Prediction]')
