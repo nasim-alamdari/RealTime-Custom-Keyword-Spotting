@@ -81,7 +81,7 @@ def upload_train_file():
     if not os.path.exists(keyword_dir):
         os.mkdir(keyword_dir)
         
-    # delete any existing audio files before oding any uploading
+    # delete any existing audio files before any uploading
     del_prevFiles (keyword_dir) 
     
     uploaded_wav = st.file_uploader("Upload your (.wav) audio file", type=["wav"], key="audio_file1")
@@ -110,7 +110,7 @@ def upload_train_file():
             st.write(result)
             
             # delete existing audio files after training
-            os.remove(file_path)
+            #os.remove(file_path)
             shutil.rmtree(os.path.join(keyword_dir, 'extractions'))
     else:
         st.write("file is not uploaded yet.")
