@@ -70,7 +70,7 @@ def send_audio_file(file, flag):
         result = response.json()
         # Display prediction result in Streamlit app
         if flag == "predict":
-            st.write("Prediction result:", result)
+            st.write("We will only be displaying the prediction result if it has a confidence score above 90%.", result)
         return result
     else:
         st.write("Error making result request")
