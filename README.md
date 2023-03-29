@@ -38,13 +38,13 @@ streamlit run streamlit_rltime_app.py
 ```
 
 ## Keyword Spotting App on AWS EC2:
-#### using Streamlit and FastAPI Model Serving
+Using Streamlit and FastAPI Model Serving
 [Link to the App](http://35.87.244.144:8501)
 
 
 
 ## Real-Time Deployment via Streamlit:
-#### This real-time version of Streamlit App should be run locally.
+The real-time version of Streamlit App should be run locally.
 ![streamlit App](Images/streamlit_scrnshot.png)
 
 
