@@ -31,7 +31,8 @@ with st.expander('About this App'):
     ''')
 
 # Step 1: Define custom keyword
-st.markdown('##### :violet[Step 1: Enter Your Custom Keyword]')
+st.markdown('### :white[Enter Custom Keyword]')
+st.markdown(':violet[Step 1: Please Enter Your Custom Keyword with No Spcae Between Words (maximum 2 words)]')
 KEYWORD = st.text_input('e.g. heyGPT')
 st.write('The current Custom Keyword is: ', KEYWORD)
 
@@ -84,7 +85,8 @@ def upload_train_file():
     # delete any existing audio files before any uploading
     del_prevFiles (keyword_dir) 
     
-    uploaded_wav = st.file_uploader("Upload your (.wav) audio file", type=["wav"], key="audio_file1")
+    uploaded_wav = st.file_uploader("Upload your (.wav) audio file that has **at least 10 times keyword (only) repeated**", type=["wav"], key="audio_file1")
+    
 
     if uploaded_wav is not None:
         st.markdown('###### :green[Upload completed! 🏁]')     
@@ -93,6 +95,8 @@ def upload_train_file():
         
         # Read WAV file and Display audio waveform
         sr, y = read(uploaded_wav)
+        if len(y)/sr < 15:
+            st.error("Please upload an audio file that is longer than 15 seconds, and has at least 10 times keyword (only) repeated", icon="🚨")
         st.audio(y, format='audio/wav', sample_rate=sr)
 
         uploaded_wav.name = KEYWORD +".wav" # rename audio before sending              
@@ -107,7 +111,6 @@ def upload_train_file():
         if st.button("Process Audio for Fine-Tuning"):
             result = send_audio_file(uploaded_wav, "train")
             st.success('###### :green[Training completed! 🏁]')
-            st.write(result)
             
             # delete existing audio files after training
             #os.remove(file_path)
@@ -149,12 +152,12 @@ def upload_predict_file():
     else:
         st.write("file is not uploaded yet.")
 
-        
-st.markdown('##### :violet[Step 2: Uploading a file for training]')
+st.markdown('### :white[Train]')   
+st.markdown('##### :violet[Step 2: Uploading an audio file for training]')
 upload_train_file()
 
-
-st.markdown('##### :violet[Step 4: Uploading a file for prediction]')       
+st.markdown('### :white[Prediction]')   
+st.markdown('##### :violet[Step 4: Uploading an audio file for prediction]')       
 upload_predict_file()
 
 

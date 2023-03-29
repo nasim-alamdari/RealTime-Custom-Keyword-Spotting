@@ -2,7 +2,7 @@
 - Proposing a lightweight few-shot keyword spotting (FS-KWS) for personalization of keyword spotting or wake-word detection running in real-time on an edge device.
 - The customization is achieved by recording audio from the user for less than 30 seconds, then segmenting the speaker's audio to 1-second speech audio files via a deep learning model [[1]](https://arxiv.org/pdf/2104.04045.pdf). Segmented audio files were then used to fine-tune and customize an efficientnet-B0-based multilingual keyword spotting model through few-shot learning. The baseline model that we used in this study is based on [Harvard-edge](https://github.com/harvard-edge/multilingual_kws)[[2]](https://www.isca-speech.org/archive/pdfs/interspeech_2021/mazumder21_interspeech.pdf) work.
 - Our model operates on short audio chunks (1 second) but at a much higher temporal resolution (every 25 ms).
-- Average processing time for each 1-second audio chunk observed to be 60 ms.
+- Average processing time for each 1-second audio chunk observed to be 35 ms.
 
 
 ## Solution Architecture
@@ -39,7 +39,8 @@ streamlit run streamlit_rltime_app.py
 
 ## Keyword Spotting App on AWS EC2:
 Using Streamlit and FastAPI Model Serving
-[Link to the App](http://35.87.244.144:8501)
+http://35.87.244.144:8501
+
 
 
 

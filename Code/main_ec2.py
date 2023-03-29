@@ -37,7 +37,7 @@ def proc_train(audio_data):
     frr_val,far_val = report_result (target_pred, nontarget_pred)
     print('Training completed!')
     print("FRR and FAA are:", frr_val, far_val)
-    return [frr_val, far_val]
+    return 'Done!'
     
 
 
