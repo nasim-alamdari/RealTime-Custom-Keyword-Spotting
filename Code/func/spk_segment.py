@@ -22,6 +22,8 @@ import sox
 import os
 from pathlib import Path
 import subprocess
+from func import spk_enhance
+
 from dotenv import load_dotenv
 load_dotenv()
 HF_TOKEN = os.getenv('HF_TOKEN')
@@ -33,10 +35,12 @@ def segment (
 
     #keyword = "heynasim"
     #recording_path = './content/target_kw/recording/heynasim/'
-
-    wav_path = os.path.join(recording_path, keyword+'.wav')
-    #print(wav_path)
     #fs, wav = wavfile.read(wav_path)
+    
+    wav_path = os.path.join(recording_path, keyword+'.wav')
+    # Apply Speech Enhancement model:
+    fs = spk_enhance.se_model(wav_path)
+    
     
     pipeline = Pipeline.from_pretrained('pyannote/speaker-segmentation',
                         use_auth_token=HF_TOKEN) # you can obtrain you HF_TOKEN from huggingface, security-tokens
