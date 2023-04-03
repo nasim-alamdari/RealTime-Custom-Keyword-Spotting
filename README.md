@@ -6,7 +6,7 @@
 
 
 ## Solution Architecture
-![Solution Architecture](images/Solution_Architecture_updated.jpg)
+![Solution Architecture](Images/Solution_Architecture_updated.png)
 
 ## Component Setup - step by step
 **1.** Clone the Project 
@@ -39,13 +39,15 @@ streamlit run streamlit_rltime_app.py
 
 ## Keyword Spotting App on AWS EC2:
 Using Streamlit and FastAPI Model Serving
-http://35.87.244.144:8501
+Demo Link: [🎥](https://www.youtube.com/watch?v=quaSahxFPLQ)
+Link to Streamlit App: http://35.87.244.144:8501
 
 
 
 
 ## Real-Time Deployment via Streamlit:
 The real-time version of Streamlit App should be run locally.
+Demo Link: [🎥](https://www.youtube.com/watch?v=didUvy0FCV8)
 ![streamlit App](Images/streamlit_scrnshot.png)
 
 
