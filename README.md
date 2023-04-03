@@ -42,7 +42,7 @@ Using Streamlit and FastAPI Model Serving
 
 Demo Link: [YouTube🎥](https://www.youtube.com/watch?v=quaSahxFPLQ)
 
-Link to Streamlit App: http://35.87.244.144:8501
+Link to Streamlit App: http://54.184.202.35:8501
 
 
 
