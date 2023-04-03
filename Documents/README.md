@@ -1,4 +1,4 @@
-![Solution Architecture](MLE11_KWS_Solution_Architecture2.jpg)
+![Solution Architecture](Solution_Architecture_updated.png)
 
 # Performance, interpretation, and learnings
 
@@ -14,3 +14,4 @@ Model to Fine-tune Keyword spotting Model:
 Performance Report:
 ![performance1](OfflineEvaluation_CustomKWS_1.png)
 ![performance2](OfflineEvaluation_CustomKWS_2.png)
+

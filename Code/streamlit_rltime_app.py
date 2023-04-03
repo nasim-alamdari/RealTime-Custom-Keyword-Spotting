@@ -32,7 +32,7 @@ RATE = int(st.sidebar.text_input('Rate', 16000))
 TH = int(st.sidebar.text_input('Detection Confidence (%)', 90))
 SESS = False
 #============== Web user interface ============================
-st.title('🎙️ Real-Time Multilingual Custom Few-Shot Keyword Spotting App')
+st.title('🎙️ Real-Time Multilingual Custom Keyword Spotting App')
 
 with st.expander('About this App'):
     st.markdown('''

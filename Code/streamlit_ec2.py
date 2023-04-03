@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent
 
 
 # Web user interface
-st.title('🎙️ Multilingual Custom Few-Shot Keyword Spotting App')
+st.title('🎙️ Multilingual Custom Keyword Spotting App')
 
 with st.expander('About this App'):
     st.markdown('''
