@@ -19,7 +19,7 @@ cd RealTime-Custom-Keyword-Spotting
 ```
 conda create --name kws
 conda activate kws
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 **3.** Regarding installing Pyaudio on M1 Mac or EC2 :
 ```
