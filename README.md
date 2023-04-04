@@ -37,17 +37,35 @@ cd Code
 streamlit run streamlit_rltime_app.py
 ```
 
+**5. To Deploy App on AWS EC2 Cloud ☁️🤖**
+(Using Streamlit and FastAPI Model Serving)
+Follow Steps 1-3, then:
+```
+sudo apt-get install tmux
+cd Code
+
+tmux new -s sess_streamlit
+streamlit run streamlit_ec2.py
+
+tmux new -s sess_fastapi
+uvicorn main_ec2:app --reload --workers 1 --host 0.0.0.0 --port 8000
+```
+
 ## Keyword Spotting App on AWS EC2:
 Using Streamlit and FastAPI Model Serving
-Demo Link: [🎥](https://www.youtube.com/watch?v=quaSahxFPLQ)
-Link to Streamlit App: http://35.87.244.144:8501
+
+Demo Link: [YouTube🎥](https://www.youtube.com/watch?v=quaSahxFPLQ)
+
+Link to the Streamlit App: http://54.184.202.35:8501
 
 
 
 
 ## Real-Time Deployment via Streamlit:
 The real-time version of Streamlit App should be run locally.
-Demo Link: [🎥](https://www.youtube.com/watch?v=didUvy0FCV8)
+
+Demo Link: [YouTube🎥](https://www.youtube.com/watch?v=didUvy0FCV8)
+
 ![streamlit App](Images/streamlit_scrnshot.png)
 
 
