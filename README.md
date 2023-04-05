@@ -38,7 +38,7 @@ streamlit run streamlit_rltime_app.py
 ```
 
 **5. To Deploy App on AWS EC2 Cloud ☁️🤖**
-(Using Streamlit and FastAPI Model Serving)
+
 Follow Steps 1-3, then:
 ```
 sudo apt-get install tmux
