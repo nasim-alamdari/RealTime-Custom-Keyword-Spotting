@@ -1,4 +1,4 @@
-<p align="leftt">
+<p align="right">
   <img src="Images/FourthBrainLogo.png" alt="Image Description" width="200px" />
 </p>
 
