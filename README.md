@@ -1,5 +1,5 @@
-<p align="right">
-  <img src="Images/FourthBrainLogo.png" alt="Image Description" width="100px" />
+<p align="leftt">
+  <img src="Images/FourthBrainLogo.png" alt="Image Description" width="200px" />
 </p>
 
 # Real-time Multilingual Custom Keyword Spotting 
