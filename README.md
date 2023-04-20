@@ -56,9 +56,6 @@ Using Streamlit and FastAPI Model Serving
 
 Demo Link: [YouTube🎥](https://www.youtube.com/watch?v=quaSahxFPLQ)
 
-Link to the Streamlit App: http://54.184.202.35:8501
-
-
 
 
 ## Real-Time Deployment via Streamlit:
