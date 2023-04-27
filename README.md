@@ -67,6 +67,8 @@ The real-time version of Streamlit App should be run locally.
 
 Demo Link: [YouTube🎥](https://www.youtube.com/watch?v=didUvy0FCV8)
 
+Presentation Link: [YouTube🎥](https://youtu.be/oAfoPEHi3og)
+
 ![streamlit App](Images/streamlit_scrnshot.png)
 
 
